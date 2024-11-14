@@ -41,9 +41,15 @@ void shuffle_deck {
 
 */
 int main(void) {
-    int test, i, c_count, coins, faces;
+    int test, i, c_count, coins_entered, faces;
+    int coins = 100;
     printf("Enter an amount of coins to start playing: ");
-    scanf("%d", &coins);
+    scanf("%d", &coins_entered);
+    if ((coins_entered <= 0) || (coins_entered > 100)) {
+        printf("Game is over.");
+        return -1;
+
+    }
     printf("You have been dealt 5 cards.")
 
     int card[36]
