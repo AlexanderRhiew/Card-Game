@@ -2,8 +2,7 @@
 //12/6/2024
 //Card_Game
 //Poker Variation, decks. 
-// JOE MAMA
-//big pp
+
 
 #include <stdio.h>
 #include <stdlib.h>
