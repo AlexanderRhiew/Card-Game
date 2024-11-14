@@ -21,23 +21,24 @@ loop to assign the suit (4 iterations)
     loop to assign the rank (9 iterations) 
     array[count].suit
     array[count].rank
+*/
 
-
-void card_suit(card list[], int num){
+void CallNum(card list[], int num){
   int i = 1; 
   int track = 0; 
       while( track < num){
-          if(i = 10){
-              i = 0; 
-          }
+          if(i == 10){
+              i = 1; 
+             }
     
-    list[i].suit = i; 
-          i++; 
-          track++;
-          printf("%d\n", list[i].suit); 
-      }
-      
+    list[i].rank = i; 
+         
+          track = track + 1;
+          printf("%d\n", list[i].rank); 
+          i = i + 1; 
+      } 
   }
+/*
 
 void card_rank {
 
@@ -57,6 +58,9 @@ int main(void) {
     int test, i, c_count, coins_entered, faces;
     int coins = 100;
     int num = 36; 
+    card list[num];
+    CallNum(list, num);
+    
     printf("Enter an amount of coins to start playing: ");
     scanf("%d", &coins_entered);
     if ((coins_entered <= 0) || (coins_entered > 100)) {
