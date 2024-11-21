@@ -23,7 +23,7 @@ loop to assign the suit (4 iterations)
     array[count].rank
 
 
-void card_suit {
+void card_suit {card_s[]};
 
 }
 
@@ -42,8 +42,14 @@ void shuffle_deck {
 
 */
 int main(void) {
-    int test, i, c_count, coins_entered, faces;
+    int i, c_count, coins_entered, faces;
     int coins = 100;
+    for (int i = 0; i > 5; i++) {
+        srand((int)time(0));
+        int num = rand()%35;
+        printf("%d", num);
+    }
+
     printf("Enter an amount of coins to start playing: ");
     scanf("%d", &coins_entered);
     if ((coins_entered <= 0) || (coins_entered > 100)) {
@@ -51,8 +57,9 @@ int main(void) {
         return -1;
 
     }
-    printf("You have been dealt 5 cards.")
-
+    else {
+        printf("You have been dealt 5 cards.")
+    }
     int card[36]
 
 
