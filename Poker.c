@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 
 typedef struct card_S {
@@ -18,19 +19,31 @@ typedef struct card_S {
 void CallNum(card list[], int num){
   int i = 1; 
   int track = 0; 
-  char select; 
-      while( track < num){
+  char select = 0; 
+    while( track < num){
           if(i == 10){
               i = 1; 
+              select++; 
+
              }
-          if(select = )
-   // list[]
-    list[track].rank = i; 
-    list[track].suit = select; 
-          
-          printf("%d\n", list[track].rank); 
-          i = i + 1; 
-          track = track + 1;
+        list[track].rank = i; 
+
+        if(select == 0){
+        list[track].suit = 'C'; 
+      }
+       if(select == 1){
+        list[track].suit = 'S'; 
+      }
+       if(select == 2){
+        list[track].suit = 'H'; 
+      }
+       if(select == 3){
+        list[track].suit = 'D'; 
+      }
+
+        printf("%d%c\n", list[track].rank, list[track].suit); 
+        i = i + 1; 
+        track = track + 1;
       }
       
   }
