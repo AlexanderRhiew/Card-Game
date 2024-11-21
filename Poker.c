@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 
 typedef struct card_S {
@@ -14,6 +15,39 @@ typedef struct card_S {
     int rank;
 
  } card;
+
+void CallNum(card list[], int num){
+  int i = 1; 
+  int track = 0; 
+  char select = 0; 
+    while( track < num){
+          if(i == 10){
+              i = 1; 
+              select++; 
+
+             }
+        list[track].rank = i; 
+
+        if(select == 0){
+        list[track].suit = 'C'; 
+      }
+       if(select == 1){
+        list[track].suit = 'S'; 
+      }
+       if(select == 2){
+        list[track].suit = 'H'; 
+      }
+       if(select == 3){
+        list[track].suit = 'D'; 
+      }
+
+        printf("%d%c\n", list[track].rank, list[track].suit); 
+        i = i + 1; 
+        track = track + 1;
+      }
+      
+  }
+
 /* 36 element array of card element
 array of Hearts, Diamonds, Spades, and Clubs
 Count = 0
