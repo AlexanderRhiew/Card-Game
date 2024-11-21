@@ -14,6 +14,27 @@ typedef struct card_S {
     int rank;
 
  } card;
+
+void CallNum(card list[], int num){
+  int i = 1; 
+  int track = 0; 
+  char select; 
+      while( track < num){
+          if(i == 10){
+              i = 1; 
+             }
+          if(select = )
+   // list[]
+    list[track].rank = i; 
+    list[track].suit = select; 
+          
+          printf("%d\n", list[track].rank); 
+          i = i + 1; 
+          track = track + 1;
+      }
+      
+  }
+
 /* 36 element array of card element
 array of Hearts, Diamonds, Spades, and Clubs
 Count = 0
