@@ -50,6 +50,10 @@ int main(void) {
         printf("%d", num);
     }
 
+    int num = 36; 
+    card list[num];
+    CallNum(list, num);
+    
     printf("Enter an amount of coins to start playing: ");
     scanf("%d", &coins_entered);
     if ((coins_entered <= 0) || (coins_entered > 100)) {
