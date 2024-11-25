@@ -59,11 +59,13 @@ void CallNum(card list[], int num){
 return plays;
 }
 
-void printCard(card list[], int i, int hand[]){
-    
-    printf("%d", list[hand[i]].rank);
-    printf("%c ", list[hand[i]].suit);
-
+void printCard(card list[], int hand[]){
+    int i; 
+        for(i = 0; i < 5; ++i){
+        printf("%d", list[hand[i]].rank);
+        printf("%c ", list[hand[i]].suit);
+    }
+    printf("\n");
 }
 
 void shuffle_deck(card list[]) {
@@ -87,15 +89,7 @@ int swap;
     }
 }
 
-/* 36 element array of card element
-array of Hearts, Diamonds, Spades, and Clubs
-Count = 0
-loop to assign the suit (4 iterations)
-    loop to assign the rank (9 iterations) 
-    array[count].suit
-    array[count].rank
-
-
+/*
 void card_suit {card_s[]};
 
 }
@@ -104,10 +98,6 @@ void card_rank {
 
 }
 
-
-void shuffle_deck {
-
-}
 void deal_card {
 int i, hand = 5;
 for (i = 0; i < hand; i++) {
@@ -131,13 +121,16 @@ int main(void) {
     
     int num = 36; 
     card list[num];
+    
     CallNum(list, num);
     shuffle_deck(list);
-    int c_count, coins_entered, faces;
-    int coins = 100;
+    
     
    // printf("%d", list[1].rank);
    //printf("%c", list[1].suit);
+   
+    int c_count, coins_entered, faces;
+    int coins = 100;
 
     printf("Enter an amount of coins to start playing: ");
     scanf("%d", &coins_entered);
@@ -149,15 +142,23 @@ int main(void) {
     
    plays = deal_card(hand, plays, list);
    
-     printf("You have been dealt 5 cards.\n");
+   printf("You have been dealt 5 cards.\n");
         
-   // printf("%d ", plays);
+    //printf("%d ", plays);
     
-    for(i = 0; i < 5; ++i){
-       printCard(list, i, hand); 
+    
+    printCard(list, hand); 
+    
+while(num != -1){
+    printf("Enter card 1-5 to change or -1 to stop:");
+    scanf("%d", &num);
+        if(num > 0 && num < 6){
+        hand[num-1] = plays + 1;
+        plays = hand[num-1];
     }
+}
 
+printCard(list, hand); 
 
-    
     return 0;
 }
