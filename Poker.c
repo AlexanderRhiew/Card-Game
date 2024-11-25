@@ -48,15 +48,15 @@ void CallNum(card list[], int num){
       
   }
   
-  void deal_card(int hand[]){
-    int i; 
-    srand((int)time(0));
-    
-    for (int i = 0; i < 5; i++) {
-        hand[i] = rand()%35;
-        //printf("%d ", hand[i]);
-        
-    }
+ int deal_card(int hand[], int plays, card list[]){
+     int i; 
+      for(i = 0; i < 5 ; ++i){
+        list[plays].rank;
+        list[plays].suit;
+        hand[i] = plays; 
+        plays++;
+      }
+return plays;
 }
 
 void printCard(card list[], int i, int hand[]){
@@ -66,7 +66,26 @@ void printCard(card list[], int i, int hand[]){
 
 }
 
-
+void shuffle_deck(card list[]) {
+card temp[2];
+int swap;
+ int i, j; 
+ 
+    srand((int)time(0));
+    for(j = 0; j < 4; ++j){
+        for (i = 0; i < 36 ; i++){
+            swap = rand()%35;
+            temp[1].rank = list[i].rank;
+            temp[1].suit = list[i].suit;
+            
+            list[i].rank = list[swap].rank;
+            list[i].suit = list[swap].suit; 
+            
+            list[swap].rank = temp[1].rank;
+            list[swap].suit = temp[1].suit;
+        }
+    }
+}
 
 /* 36 element array of card element
 array of Hearts, Diamonds, Spades, and Clubs
@@ -105,6 +124,7 @@ int main(void) {
     char name[100];
     int hand[5];
     int store[5];
+    int plays = 0; 
     printf("Please enter your name:");
     fgets(name, 100, stdin);
     printf("%s", name);
@@ -112,23 +132,13 @@ int main(void) {
     int num = 36; 
     card list[num];
     CallNum(list, num);
-
-   /* for (i = 1; i <= NumOfPlayers; i++) {
-        Deal_Card(i);
-    }
-
-*/
-
+    shuffle_deck(list);
     int c_count, coins_entered, faces;
     int coins = 100;
     
- 
-    
-    
-  
-   // printf("%d", list[hand[1]].rank);
-   // printf("%c", list[hand[1]].suit);
-    
+   // printf("%d", list[1].rank);
+   //printf("%c", list[1].suit);
+
     printf("Enter an amount of coins to start playing: ");
     scanf("%d", &coins_entered);
     if ((coins_entered <= 0) || (coins_entered > 100)) {
@@ -136,21 +146,16 @@ int main(void) {
         return -1;
 
     }
-    else {
-        while (i < 5) {
-            deal_card(hand);
-            ++i;
-
-        }
-        printf("You have been dealt 5 cards.\n");
+    
+   plays = deal_card(hand, plays, list);
+   
+     printf("You have been dealt 5 cards.\n");
         
-    }
+   // printf("%d ", plays);
+    
     for(i = 0; i < 5; ++i){
        printCard(list, i, hand); 
     }
-    
-    
-    int card[36];
 
 
     
