@@ -182,9 +182,9 @@ int straight(int hand[], card list[], int condition){
 int play(card list[], int hand[]){
 int i, j;
 int check = 0; 
-int condition; 
+int condition = 0; 
 int keep = 0; 
-int wins; 
+int wins = 0; 
 condition = straight(hand, list, condition);
 condition = kind(list, hand, condition);
     
@@ -236,6 +236,7 @@ return wins;
 int main(void) {
 
     int i, wins;
+    wins = 0; 
     char name[100];
     int hand[5];
     int store[5];
