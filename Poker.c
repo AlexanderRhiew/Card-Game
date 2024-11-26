@@ -56,6 +56,7 @@ void CallNum(card list[], int num){
         hand[i] = plays; 
         plays++;
       }
+      
 return plays;
 }
 
@@ -89,15 +90,83 @@ int swap;
     }
 }
 
+int kind(card list[], int hand[], int condition){
+    int i,j;
+    int check; 
+    int most_matches = 0;
+    for(j = 0; j < 5; j++){
+        check = 0; 
+        for(i = 0; i < 5; i++){
+                if(list[hand[i]].rank == list[hand[j]].rank){
+                    check++; 
+                } 
+            }
+        if(check > most_matches){
+            most_matches = check;
+        }
+    }
+    if(most_matches == 3){
+        condition = 6;
+    }
+    if(most_matches == 4){
+        condition = 2;
+    }
+        return condition; 
+}
+
+
+int flush(card list[], int hand[], int condition){
+    int check; 
+    int i; 
+        for(i = 0; i < 5; i++){
+            if(list[hand[i]].rank == list[hand[i]].rank + i){
+                check++; 
+            } 
+        }
+        
+    if(check == 5){ 
+        condition = 1; 
+    }
+    else{
+        condition = 4; 
+    }
+    
+    return condition; 
+    }
+
+void play(card list[], int hand[]){
+int i;
+int check = 0; 
+int condition; 
+
+    condition = kind(list, hand, condition);
+    for(i = 0; i < 5; i++){
+        if(list[hand[i]].suit == list[hand[0]].suit){
+            check++;
+        }
+    }
+    if(check == 5){
+       condition = flush(list, hand, condition);
+        }
+    if(condition == 1){
+        printf("Royal Flush");
+    }
+    if(condition == 2){
+        printf("4 of a kind");
+    }
+    
+    if(condition == 4){
+        printf("Flush");
+    }
+    if(condition == 6){
+        printf("3 of a kind");
+    }
+}
+
+
+
+    
 /*
-void card_suit {card_s[]};
-
-}
-
-void card_rank {
-
-}
-
 void deal_card {
 int i, hand = 5;
 for (i = 0; i < hand; i++) {
@@ -146,7 +215,6 @@ int main(void) {
         
     //printf("%d ", plays);
     
-    
     printCard(list, hand); 
     
 while(num != -1){
@@ -159,6 +227,8 @@ while(num != -1){
 }
 
 printCard(list, hand); 
+
+play(list, hand);
 
     return 0;
 }
