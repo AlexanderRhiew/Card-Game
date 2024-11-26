@@ -3,7 +3,6 @@
 //Card_Game
 //Poker Variation, decks. 
 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,6 +14,24 @@ typedef struct card_S {
     int rank;
 
  } card;
+ 
+ void sort(int hand[], card list[]){
+ int i;
+ int j; 
+ int temp;
+
+
+    for(i = 0; i < 5; i++){
+    j = i;
+        while(j > 0 && (list[hand[j]].rank < list[hand[j-1]].rank)){
+           temp = hand[j-1];
+          hand[j-1] = hand[j];
+           hand[j] = temp; 
+           --j;
+        }
+    }
+}
+
 
 void CallNum(card list[], int num){
   int i = 1; 
@@ -69,6 +86,7 @@ void printCard(card list[], int hand[]){
     printf("\n");
 }
 
+
 void shuffle_deck(card list[]) {
 card temp[2];
 int swap;
@@ -94,6 +112,7 @@ int kind(card list[], int hand[], int condition){
     int i,j;
     int check; 
     int most_matches = 0;
+    int second_matches; 
     for(j = 0; j < 5; j++){
         check = 0; 
         for(i = 0; i < 5; i++){
@@ -102,12 +121,22 @@ int kind(card list[], int hand[], int condition){
                 } 
             }
         if(check > most_matches){
+            second_matches = most_matches;
             most_matches = check;
+            
+            
         }
     }
+    
     if(most_matches == 3){
-        condition = 6;
+        if(second_matches == 2){
+            condition = 3;
+        }
+        else{
+            condition = 6;
+        }
     }
+    
     if(most_matches == 4){
         condition = 2;
     }
@@ -119,7 +148,7 @@ int flush(card list[], int hand[], int condition){
     int check; 
     int i; 
         for(i = 0; i < 5; i++){
-            if(list[hand[i]].rank == list[hand[i]].rank + i){
+            if(list[hand[i]].rank == list[hand[0]].rank + i){
                 check++; 
             } 
         }
@@ -134,52 +163,79 @@ int flush(card list[], int hand[], int condition){
     return condition; 
     }
 
-void play(card list[], int hand[]){
-int i;
+int straight(int hand[], card list[], int condition){
+    int check; 
+    int i; 
+        for(i = 0; i < 5; i++){
+            if(list[hand[i]].rank == list[hand[0]].rank + i){
+                check++; 
+            } 
+        }
+        
+    if(check == 5){ 
+        condition = 5; 
+    }
+    return condition;
+}
+
+
+int play(card list[], int hand[]){
+int i, j;
 int check = 0; 
 int condition; 
-
-    condition = kind(list, hand, condition);
+int keep = 0; 
+int wins; 
+condition = straight(hand, list, condition);
+condition = kind(list, hand, condition);
+    
+for(j = 0; j < 5; j++){
+    check = 0; 
     for(i = 0; i < 5; i++){
-        if(list[hand[i]].suit == list[hand[0]].suit){
+        if(list[hand[i]].suit == list[hand[j]].suit){
             check++;
         }
     }
+    if(check > keep){
+        keep = check; 
+    }
+}
     if(check == 5){
        condition = flush(list, hand, condition);
         }
+        
     if(condition == 1){
-        printf("Royal Flush");
+        printf("Royal Flush\n");
+        wins = 100; 
     }
     if(condition == 2){
-        printf("4 of a kind");
+        printf("4 of a kind\n");
+        wins = 50;
+    }
+    if(condition == 3){
+        printf("Full House\n"); //check
+        wins = 20;
     }
     
     if(condition == 4){
-        printf("Flush");
+        printf("Flush\n");
+        wins = 15;
+    }
+    if(condition == 5){ 
+        printf("Straight\n"); //check
+        wins = 10;
     }
     if(condition == 6){
-        printf("3 of a kind");
+        printf("3 of a kind\n");
+        wins = 3; 
     }
-}
-
-
-
     
-/*
-void deal_card {
-int i, hand = 5;
-for (i = 0; i < hand; i++) {
-    randint(CallNum);
-    hand++;
+return wins;
 }
 
 
-//nt Deal_Card(int i);
-*/
 int main(void) {
 
-    int i;
+    int i, wins;
     char name[100];
     int hand[5];
     int store[5];
@@ -203,6 +259,7 @@ int main(void) {
 
     printf("Enter an amount of coins to start playing: ");
     scanf("%d", &coins_entered);
+    coins = coins - coins_entered; 
     if ((coins_entered <= 0) || (coins_entered > 100)) {
         printf("Game is over.");
         return -1;
@@ -214,7 +271,8 @@ int main(void) {
    printf("You have been dealt 5 cards.\n");
         
     //printf("%d ", plays);
-    
+   
+   sort(hand, list);
     printCard(list, hand); 
     
 while(num != -1){
@@ -225,10 +283,16 @@ while(num != -1){
         plays = hand[num-1];
     }
 }
-
+ 
+sort(hand, list);
 printCard(list, hand); 
 
-play(list, hand);
+wins = play(list, hand);
+
+c_count = wins * coins_entered; 
+coins = coins + c_count; 
+printf("you have %d coins", coins);
+
 
     return 0;
 }
