@@ -268,16 +268,21 @@ int main(void) {
    //printf("%c", list[1].suit);
    
     int c_count, coins_entered, faces;
-   
+    int skip = 0; 
+    
     printf("%s has %d coins\n", name, coins);
-    printf("Please enter an amount of coins to start playing: ");
-    scanf("%d", &coins_entered);
-    coins = coins - coins_entered; 
-    if ((coins_entered <= 0) || (coins_entered > 100)) {
-        printf("Game is over.");
-        return -1;
-
+    
+    while(skip != 1){
+        printf("Please enter an amount of coins to start playing: ");
+        scanf("%d", &coins_entered);
+         
+        if ((coins_entered > 0) && (coins_entered <= coins)) {
+            skip = 1; 
+    
+        }
     }
+    
+    coins = coins - coins_entered; 
     
    plays = deal_card(hand, plays, list);
    
