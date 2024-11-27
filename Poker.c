@@ -244,13 +244,19 @@ int main(void) {
     
     printf("Please enter your name:");
     fgets(name, 100, stdin);
-    printf("%s", name);
+    if(name[strlen(name) - 1] == '\n'){
+        name[strlen(name) - 1] = '\0';
+    }
+        
+    
+    
     
     int num = 36; 
     card list[num];
      CallNum(list, num);
      shuffle_deck(list);
     int con = 0; 
+    int coins = 100;
     while(con != -1){
   
     if(plays > 25){
@@ -262,9 +268,9 @@ int main(void) {
    //printf("%c", list[1].suit);
    
     int c_count, coins_entered, faces;
-    int coins = 100;
-
-    printf("Enter an amount of coins to start playing: ");
+   
+    printf("%s has %d coins\n", name, coins);
+    printf("Please enter an amount of coins to start playing: ");
     scanf("%d", &coins_entered);
     coins = coins - coins_entered; 
     if ((coins_entered <= 0) || (coins_entered > 100)) {
@@ -281,13 +287,13 @@ int main(void) {
    
     sort(hand, list);
     printCard(list, hand); 
-    
-while(num != -1){
+int swap = 0; 
+while(swap != -1){
     printf("Enter card 1-5 to change or -1 to stop:");
-    scanf("%d", &num);
-        if(num > 0 && num < 6){
-        hand[num-1] = plays + 1;
-        plays = hand[num-1];
+    scanf("%d", &swap);
+        if(swap > 0 && swap < 6){
+        hand[swap-1] = plays + 1;
+        plays = hand[swap-1];
     }
 }
  
@@ -299,9 +305,12 @@ wins = play(list, hand);
 c_count = wins * coins_entered; 
 coins = coins + c_count; 
 printf("you have %d coins\n", coins);
+if(coins <= 0){
+printf("You lose");
+break; 
+}
 printf("Continue? (-1 to quit):\n\n");
 scanf("%d", &con);
-
 
 }
 
