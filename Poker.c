@@ -2,7 +2,6 @@
 //12/6/2024
 //Card_Game
 //Poker Variation, decks. 
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -109,10 +108,11 @@ int swap;
 }
 
 int kind(card list[], int hand[], int condition){
-    int i,j;
+    int i, j;
     int check; 
     int most_matches = 0;
     int second_matches; 
+    
     for(j = 0; j < 5; j++){
         check = 0; 
         for(i = 0; i < 5; i++){
@@ -164,7 +164,7 @@ int flush(card list[], int hand[], int condition){
     }
 
 int straight(int hand[], card list[], int condition){
-    int check; 
+    int check = 0; 
     int i; 
         for(i = 0; i < 5; i++){
             if(list[hand[i]].rank == list[hand[0]].rank + i){
@@ -221,7 +221,7 @@ for(j = 0; j < 5; j++){
         wins = 15;
     }
     if(condition == 5){ 
-        printf("Straight\n"); //check
+        printf("Straight\n"); 
         wins = 10;
     }
     if(condition == 6){
@@ -241,16 +241,22 @@ int main(void) {
     int hand[5];
     int store[5];
     int plays = 0; 
+    
     printf("Please enter your name:");
     fgets(name, 100, stdin);
     printf("%s", name);
     
     int num = 36; 
     card list[num];
-    
-    CallNum(list, num);
-    shuffle_deck(list);
-    
+     CallNum(list, num);
+     shuffle_deck(list);
+    int con = 0; 
+    while(con != -1){
+  
+    if(plays > 25){
+        shuffle_deck(list);
+        plays = 0; 
+    }
     
    // printf("%d", list[1].rank);
    //printf("%c", list[1].suit);
@@ -273,7 +279,7 @@ int main(void) {
         
     //printf("%d ", plays);
    
-   sort(hand, list);
+    sort(hand, list);
     printCard(list, hand); 
     
 while(num != -1){
@@ -292,8 +298,12 @@ wins = play(list, hand);
 
 c_count = wins * coins_entered; 
 coins = coins + c_count; 
-printf("you have %d coins", coins);
+printf("you have %d coins\n", coins);
+printf("Continue? (-1 to quit):\n\n");
+scanf("%d", &con);
 
+
+}
 
     return 0;
 }
