@@ -1,7 +1,8 @@
 //Alex Rhiew + Taysom StolWorthy
 //12/6/2024
 //Card_Game
-//Poker Variation, decks. 
+//Poker Variation, decks.
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -109,7 +110,7 @@ int swap;
 
 int kind(card list[], int hand[], int condition){
     int i, j;
-    int check; 
+    int check = 0; 
     int most_matches = 0;
     int second_matches; 
     
@@ -145,7 +146,7 @@ int kind(card list[], int hand[], int condition){
 
 
 int flush(card list[], int hand[], int condition){
-    int check; 
+    int check = 0; 
     int i; 
         for(i = 0; i < 5; i++){
             if(list[hand[i]].rank == list[hand[0]].rank + i){
@@ -204,7 +205,7 @@ for(j = 0; j < 5; j++){
         }
         
     if(condition == 1){
-        printf("Royal Flush\n");
+        printf("Straight Flush\n");
         wins = 100; 
     }
     if(condition == 2){
@@ -244,6 +245,7 @@ int main(void) {
     
     printf("Please enter your name:");
     fgets(name, 100, stdin);
+    
     if(name[strlen(name) - 1] == '\n'){
         name[strlen(name) - 1] = '\0';
     }
@@ -253,69 +255,73 @@ int main(void) {
     
     int num = 36; 
     card list[num];
-     CallNum(list, num);
+    CallNum(list, num);
      shuffle_deck(list);
     int con = 0; 
     int coins = 100;
+    
     while(con != -1){
-  
-    if(plays > 25){
-        shuffle_deck(list);
-        plays = 0; 
-    }
+      
+        if(plays > 25){
+            shuffle_deck(list);
+            plays = 0; 
+        }
+        
+       // printf("%d", list[1].rank);
+       //printf("%c", list[1].suit);
+       
+        int c_count, coins_entered, faces;
+        int skip = 0; 
+        
+        printf("%s has %d coins\n", name, coins);
+        
+        while(skip != 1){
+            printf("Please enter an amount of coins to start playing: ");
+            scanf("%d", &coins_entered);
+             
+            if ((coins_entered > 0) && (coins_entered <= coins)) {
+                skip = 1; 
+        
+            }
+        }
+        
+        coins = coins - coins_entered; 
+        
+       plays = deal_card(hand, plays, list);
+       
+       printf("You have been dealt 5 cards.\n");
+            
+        //printf("%d ", plays);
+       //printCard(list, hand); 
+        sort(hand, list);
+        printCard(list, hand); 
+    int swap = 0; 
     
-   // printf("%d", list[1].rank);
-   //printf("%c", list[1].suit);
-   
-    int c_count, coins_entered, faces;
-    int skip = 0; 
-    
-    printf("%s has %d coins\n", name, coins);
-    
-    while(skip != 1){
-        printf("Please enter an amount of coins to start playing: ");
-        scanf("%d", &coins_entered);
-         
-        if ((coins_entered > 0) && (coins_entered <= coins)) {
-            skip = 1; 
-    
+    while(swap != -1){
+        printf("Enter card 1-5 to change or -1 to stop:");
+        scanf("%d", &swap);
+            if(swap > 0 && swap < 6){
+            hand[swap-1] = plays + 1;
+            plays = hand[swap-1];
         }
     }
-    
-    coins = coins - coins_entered; 
-    
-   plays = deal_card(hand, plays, list);
-   
-   printf("You have been dealt 5 cards.\n");
-        
-    //printf("%d ", plays);
-   
+     
     sort(hand, list);
     printCard(list, hand); 
-int swap = 0; 
-while(swap != -1){
-    printf("Enter card 1-5 to change or -1 to stop:");
-    scanf("%d", &swap);
-        if(swap > 0 && swap < 6){
-        hand[swap-1] = plays + 1;
-        plays = hand[swap-1];
+    
+    wins = play(list, hand);
+    
+    c_count = wins * coins_entered; 
+    coins = coins + c_count; 
+    printf("you have %d coins\n", coins);
+    
+    if(coins <= 0){
+        printf("Game over");
+        break; 
     }
-}
- 
-sort(hand, list);
-printCard(list, hand); 
-
-wins = play(list, hand);
-
-c_count = wins * coins_entered; 
-coins = coins + c_count; 
-printf("you have %d coins\n", coins);
-if(coins <= 0){
-printf("You lose");
-break; 
-}
-printf("Continue? (-1 to quit):\n\n");
-scanf("%d", &con);
+    
+    printf("Continue? (-1 to quit):\n\n");
+    scanf("%d", &con);
 
 }
 
