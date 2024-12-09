@@ -296,8 +296,6 @@ int play(card list[], int hand[]) { //Function for determing hand value/worth
     if (flush) return 4;
     if (straight) return 5;
     if (three_of_a_kind) return 6;
-    if (pairs == 2) return 7;
-    if (pairs == 1) return 8;
     return 0;
 }
 
@@ -309,8 +307,6 @@ char* get_hand_type(int condition) { //Used to print what hand the player has.
         case 4: return "\nFlush!";
         case 5: return "\nStraight!";
         case 6: return "\nThree of a Kind!";
-        case 7: return "\nTwo Pairs!";
-        case 8: return "\nOne Pair!";
         default: return "\nBad hand.";
     }
 }
@@ -329,17 +325,15 @@ char* suggest_cards_to_keep(card list[], int hand[], int condition) {
             strcat(suggestion, card);
         }
     } 
-    else if (condition == 2 || condition == 6 || condition == 7 || condition == 8) {
+    else if (condition == 2 || condition == 6) {
         strcpy(suggestion, "Keep: ");
         for (int i = 0; i < 5; ++i) {
             for (int j = i + 1; j < 5; ++j) {
                 if (list[hand[i]].rank == list[hand[j]].rank) {
-                    char card1[5], card2[5]; //Make 2 sprintf fct to account for
+                    char card1[5]; //Make 2 sprintf fct to account for
                     //possibilities of multiple pairs in a hand, like 3D 3S 4H 4S 5H
                     sprintf(card1, "%d%c ", list[hand[i]].rank, list[hand[i]].suit);
-                    sprintf(card2, "%d%c ", list[hand[j]].rank, list[hand[j]].suit);
                     strcat(suggestion, card1);
-                    strcat(suggestion, card2);
                 }
             }
         }
