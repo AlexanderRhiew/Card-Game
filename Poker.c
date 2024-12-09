@@ -16,7 +16,7 @@ typedef struct card_S {
 
  } card;
  
- void write_statistics_to_file(int total_rounds, int wins, int losses, int hand_wins[]);
+ void write_statistics_to_file(int total_rounds, int wins, int losses, int hand_wins[]); //Function for statistics
  
  void sort(int hand[], card list[]){ //Function will sort each card by numeric value
  int i;                             //least to greatest
@@ -244,13 +244,13 @@ for(j = 0; j < 5; j++){ //checks each card to see if they have the same rank as 
 return wins; //returns to main
 }
 */
-int play(card list[], int hand[]) {
+int play(card list[], int hand[]) { //Function for determing hand value/worth
     int rank_count[10] = {0};
     int suit_count[4] = {0};
 
     for (int i = 0; i < 5; ++i) {
         rank_count[list[hand[i]].rank]++;
-        switch (list[hand[i]].suit) {
+        switch (list[hand[i]].suit) { //Each case represents either Hearts, Diamonds, Clubs, or Spades
             case 'H': suit_count[0]++; 
             break;
             case 'D': suit_count[1]++; 
@@ -291,9 +291,9 @@ int play(card list[], int hand[]) {
         if (rank_count[i] == 4) four_of_a_kind = 1;
     }
 
-    if (straight && flush) return 1;
+    if (straight && flush) return 1; //Straight Flush
     if (four_of_a_kind) return 2;
-    if (three_of_a_kind && pairs == 1) return 3;
+    if (three_of_a_kind && pairs == 1) return 3; //Full House
     if (flush) return 4;
     if (straight) return 5;
     if (three_of_a_kind) return 6;
@@ -302,7 +302,7 @@ int play(card list[], int hand[]) {
     return 0;
 }
 
-char* get_hand_type(int condition) {
+char* get_hand_type(int condition) { //Used to print what hand the player has.
     switch(condition) {
         case 1: return "\nStraight Flush!";
         case 2: return "\nFour of a Kind!";
@@ -321,7 +321,8 @@ char* suggest_cards_to_keep(card list[], int hand[], int condition) {
     //messing with card prints
     suggestion[0] = '\0';
 
-    if (condition == 1 || condition == 3 || condition == 4 || condition == 5) {
+    if (condition == 1 || condition == 3 || condition == 4 || condition == 5) { //Checks to see if the player meets one of the "good" hands
+        //If they do, prints what cards they are recommended to keep
         strcpy(suggestion, "Keep all cards: ");
         for (int i = 0; i < 5; ++i) {
             char card[5];
@@ -345,12 +346,12 @@ char* suggest_cards_to_keep(card list[], int hand[], int condition) {
         }
     } 
     else {
-        strcpy(suggestion, "User decision for card replacement");
+        strcpy(suggestion, "User decision for card replacement"); //Hand has nothing of value
     }
     return suggestion;
 }
 
-void write_statistics_to_file(int total_rounds, int wins, int losses, int hand_wins[]) {
+void write_statistics_to_file(int total_rounds, int wins, int losses, int hand_wins[]) { //Extra Credit, keeps data aftergame in a separate file
     FILE *file = fopen("game_statistics.txt", "w");
     if (file == NULL) {
         printf("Error: Unable to write statistics to file.\n");
@@ -436,7 +437,7 @@ int main(void) {
         if (plays > 25) { shuffle_deck(list); plays = 0; }
         printf("%s has %d coins.\n", name, coins);
         int coins_entered, skip = 0;
-        while (skip != 1) {
+        while (skip != 1) {//Program continues until -1 is typed.
             printf("Please enter an amount of coins to start playing: ");
             scanf("%d", &coins_entered);
             if (coins_entered > 0 && coins_entered <= coins) skip = 1;
@@ -454,7 +455,7 @@ int main(void) {
                get_hand_type(condition));
 
         int swap = 0;
-        while (swap != -1) {
+        while (swap != -1) { //Swaps the card of player's choosing (their input of 1-5)
             printf("Enter card 1-5 to change or -1 to stop: ");
             scanf("%d", &swap);
             if (swap > 0 && swap < 6) {
@@ -499,7 +500,7 @@ int main(void) {
         total_rounds++;
     }
 
-    write_statistics_to_file(total_rounds, rounds_won, rounds_lost, hand_wins);
+    write_statistics_to_file(total_rounds, rounds_won, rounds_lost, hand_wins); //Calls function to write data after game ends. 
     printf("Thanks for playing!\n");
     return 0;
 }
