@@ -3,6 +3,7 @@
 //Card_Game
 //Poker Variation, decks.
 
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,7 +16,7 @@ typedef struct card_S {
 
  } card;
  
- void sort(int hand[], card list[]){. //Function will sort each card by numeric value
+ void sort(int hand[], card list[]){ //Function will sort each card by numeric value
  int i;                             //least to greatest
  int j; 
  int temp;
@@ -83,8 +84,9 @@ void printCard(card list[], int hand[]){ //simply prints the cards in your hand
         printf("%d", list[hand[i]].rank);
         printf("%c ", list[hand[i]].suit);
     }
-    printf("\n");
+    printf("\n\n");
 }
+
 
 
 void shuffle_deck(card list[]) { //shuffles deck with random numbers under 35
@@ -107,6 +109,7 @@ int swap;                       //with the value of i in a for loop that repeats
         }
     }
 }
+
 
 int kind(card list[], int hand[], int condition){ //this checks if your hand is either
     int i, j;                                     // a full house, a 3 in a row, or a
@@ -133,7 +136,7 @@ int kind(card list[], int hand[], int condition){ //this checks if your hand is 
         if(second_matches == 2){ //if we have 3 cards of the same value plus 2 cards
             condition = 3;      //cards of the same value, then we got a house. 
         }                       
-        else{.           //otherwise it's just 3 in a row
+        else{         //otherwise it's just 3 in a row
             condition = 6;
         }
     }
@@ -143,6 +146,7 @@ int kind(card list[], int hand[], int condition){ //this checks if your hand is 
     }
         return condition; //conditions go into the play function
 }
+
 
 
 int flush(card list[], int hand[], int condition){ //function is for hands with cards of the same suit
@@ -157,7 +161,7 @@ int flush(card list[], int hand[], int condition){ //function is for hands with 
     if(check == 5){  //straight flush
         condition = 1; 
     }
-    else{.     //otherwise it's just a normal flush 
+    else{    //otherwise it's just a normal flush 
         condition = 4; 
     }
     
@@ -241,11 +245,10 @@ return wins; //returns to main
 
 int main(void) {
 
-    int i, wins;
+    int wins;
     wins = 0; 
     char name[100];
     int hand[5];
-    int store[5];
     int plays = 0; //play value will refer to the position in card list[]
     
     printf("Please enter your name:");
@@ -272,7 +275,7 @@ int main(void) {
         }
         
        
-        int c_count, coins_entered, faces;
+        int c_count, coins_entered;
         int skip = 0; 
         
         printf("%s has %d coins\n", name, coins);
@@ -291,9 +294,11 @@ int main(void) {
         
        plays = deal_card(hand, plays, list); //deal_card will move the plays value by +5. 
        
-       printf("You have been dealt 5 cards.\n");
+       printf("You have been dealt 5 cards.\n\n");
             
-        sort(hand, list); //sort hand 
+       sort(hand, list); //sort hand 
+       printf("%s's hand: ",name);
+        
         printCard(list, hand); //prints hand.
     int swap = 0; 
     
@@ -301,17 +306,19 @@ int main(void) {
         printf("Enter card 1-5 to change or -1 to stop:");
         scanf("%d", &swap);
             if(swap > 0 && swap < 6){
-            hand[swap-1] = plays + 1; //array starts a 0, so swap needs to be subtracted by one
-            plays = hand[swap-1]; //swaps card with the top card on the deck
+            hand[swap-1] = plays + 1; 
+            plays = plays + 1;               //array starts a 0, so swap needs to be subtracted by one
+            plays = hand[swap-1]; //swaps card with the top card on the deck. Swap moves up by one as you are going down the deck
         }
     }
 
-     
     sort(hand, list);
+    printf("%s's hand: ",name);
     printCard(list, hand); //shows new hand 
     
     wins = play(list, hand); //play function will find if you have any win conditions
-                             //then it will assign how much it's worth.
+                             //then it will assign how much it's worth. function doens't return win condition but rather it's money value.
+                             
      c_count = wins * coins_entered; //mulitply wins with the amount of coins you entered
         if(wins == 0){
         printf("you lose %d coins \n", coins_entered);
@@ -323,7 +330,7 @@ int main(void) {
         
     
     coins = coins + c_count; //new amount of coins
-    printf("you have %d coins\n", coins);
+    printf("\nyou have %d coins\n", coins);
     
     if(coins <= 0){
         printf("Game over");
@@ -334,6 +341,6 @@ int main(void) {
     scanf("%d", &con); //if you still have coins, you can choose to keep playing
 
 }
-
+printf("Thanks for playing!");
     return 0;
 }
