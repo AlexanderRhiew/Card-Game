@@ -2,8 +2,7 @@
 //12/6/2024
 //Card_Game
 //Poker Variation, decks.
-
-*UPDATED VERSION CODE: LINES 7-505*
+//UPDATED CODE IS FROM 6-505
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -504,6 +503,7 @@ int main(void) {
     printf("Thanks for playing!\n");
     return 0;
 }
+/*
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -844,3 +844,4 @@ int main(void) {
 printf("Thanks for playing!");
     return 0;
 }
+*/
